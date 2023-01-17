@@ -11,11 +11,18 @@
             <div class="overlay">
                 <div>
                     <h1>당당마켓</h1>
-                    <span>가장 가까운 중고거래 플랫폼 {{ request.session.user_id }}</span>
+                    <span>가장 가까운 중고거래 플랫폼 {{ request.user.username }}</span>
                 </div>
             </div>
         </div>
         <div class="product-content">
+            <div>
+                {% if request.user.is_authenticated %}
+                <a href="/member/logout/">로그아웃</a>
+                {% else %}
+                <a href="/member/login/">로그인</a>
+                {% endif %}
+            </div>
             <div class="list-group list-group-flush">
                 {% for product in products %}
                 <button
@@ -40,9 +47,11 @@
                 </button>
                 {% endfor %}
             </div>
+            {% if request.user.is_authenticated %}
             <div class="text-end mt-3">
                 <a role="button" href="/product/write/" class="btn btn-primary">상품 등록</a>
             </div>
+            {% endif %}
         </div>
         <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
             <div class="modal-dialog">

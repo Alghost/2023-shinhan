@@ -9,6 +9,9 @@ def main(request):
     return render(request, 'product.html', { 'products': products })
 
 def write(request):
+    if not request.user.is_authenticated:
+        return redirect('/member/login/')
+
     if request.method == 'POST':
         product = Product(
             title=request.POST.get("title"),
