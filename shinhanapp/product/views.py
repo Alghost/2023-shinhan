@@ -5,7 +5,7 @@ from .models import Product
 # Create your views here.
 
 def main(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-id')
     return render(request, 'product.html', { 'products': products })
 
 def write(request):
@@ -24,6 +24,7 @@ def write(request):
     return render(request, 'product_write.html')
 
 def detail(request, pk):
+
     product = Product.objects.get(pk=pk)
 
     ret = {
