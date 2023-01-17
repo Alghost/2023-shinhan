@@ -25,7 +25,11 @@
                 >
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" class="product-image">
+                            {% else %}
                             <img src="/static/bg.jpg" class="product-image">
+                            {% endif %}
                         </div>
                         <div class="flex-grow-1 ms-3 text-end">
                             {{ product.title }}<br/>
@@ -36,6 +40,9 @@
                 </button>
                 {% endfor %}
             </div>
+            <div class="text-end mt-3">
+                <a role="button" href="/product/write/" class="btn btn-primary">상품 등록</a>
+            </div>
         </div>
         <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -45,7 +52,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="/static/bg.jpg" />
+                        <img src="/static/bg.jpg" id="detailModalImage" />
                         <div id="detailModalLocation"></div>
                         <div id="detailModalPrice"></div>
                         <div id="detailModalContent"></div>
