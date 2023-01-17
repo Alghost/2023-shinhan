@@ -8,6 +8,9 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='가격')
     location = models.CharField(max_length=256, verbose_name="위치")
 
+    # 중간에 추가했기 때문에 makemigrations, migrate 실행
+    image = models.FileField(null=True, blank=True, verbose_name='이미지')
+
     class Meta:
         db_table = 'shinhan_product'
         verbose_name = '상품'
