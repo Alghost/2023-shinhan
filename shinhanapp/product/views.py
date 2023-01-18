@@ -14,6 +14,7 @@ def write(request):
 
     if request.method == 'POST':
         product = Product(
+            user=request.user,
             title=request.POST.get("title"),
             content=request.POST.get("content"),
             price=request.POST.get("price"),
@@ -27,7 +28,6 @@ def write(request):
     return render(request, 'product_write.html')
 
 def detail(request, pk):
-
     product = Product.objects.get(pk=pk)
 
     ret = {
@@ -36,6 +36,7 @@ def detail(request, pk):
         'price': product.price,
         'location': product.location,
         'image': '/static/bg.jpg',
+        'username': product.user.username,
     }
     if product.image:
         ret['image'] = product.image.url

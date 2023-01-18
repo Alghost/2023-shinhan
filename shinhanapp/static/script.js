@@ -4,6 +4,7 @@ $(document).ready(function () {
         $.get("http://127.0.0.1:8000/product/"+ product_id + "/")
             .then(function (result){
                 $("#detailModalImage").attr("src", result.image);
+                $("#detailModalUsername").text(result.username);
                 $("#detailModalTitle").text(result.title);
                 $("#detailModalLocation").text(result.location);
                 $("#detailModalPrice").text(result.price);
