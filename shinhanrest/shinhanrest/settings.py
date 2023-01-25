@@ -37,12 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
+    'debug_toolbar',
     'product.apps.ProductConfig',
     'member.apps.MemberConfig',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,3 +149,10 @@ AUTH_USER_MODEL = "member.Member"
 AUTHENTICATION_BACKENDS = [
     "member.auth.MemberAuth"
 ]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True

@@ -1,6 +1,8 @@
 from rest_framework import generics, mixins
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 from .models import Comment, Like, Product
 from .serializers import (
     ProductSerializer,
@@ -17,10 +19,10 @@ class ProductListView(
 ):
     serializer_class = ProductSerializer
     pagination_class = ProductLargePagination
+    # permission_classes = [IsAuthenticated,]
 
     def get_queryset(self):
-        products = Product.objects.all()
-
+        products = Product.objects.all().prefetch_related('comment_set')
         # if 'name' in self.request.query_params:
         #     name = self.request.query_params['name']
         #     products = products.filter(name__contains=name)
@@ -67,7 +69,9 @@ class CommentListView(
     def get_queryset(self):
         product_id = self.kwargs.get('product_id')
         if product_id:
-            return Comment.objects.filter(product_id=product_id).order_by('-id')
+            return Comment.objects.filter(product_id=product_id) \
+                    .select_related('member', 'product') \
+                    .order_by('-id')
         return Comment.objects.none()
 
     def get(self, request, *args, **kwargs):
